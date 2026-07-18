@@ -1,3 +1,19 @@
+## [1.4.10-pro] - 2026-07-18
+### Added
+- Added `SetCancellationToken(CancellationToken)` to `TweenAnimation`.
+- TweenAnimationComponent and the owner of TweenAnimation now populate the 'unityTarget' in PrimeTweenManager's Inspector.
+- UniTask integration.
+
+## [1.4.10] - 2026-07-18
+### Added
+- Added `SetCancellationToken(CancellationToken)` to `Tween`, `Sequence`.
+- UniTask integration.
+- Added main thread check to all PrimeTween APIs.
+### Fixed
+- Fixed: compilation error when the project contains a plugin DLL that duplicates a framework type (e.g., a custom System.CodeDom.dll). PrimeTween's asmdefs now enable "Override References" to avoid the conflict. https://github.com/KyryloKuzyk/PrimeTween/issues/251
+- Fixed: Unity 6000.7 shows a warning that the DEVELOPMENT_BUILD define is deprecated.
+- Fixed: Unity 6000.7 shows a warning that `AppDomain.CurrentDomain.GetAssemblies()` is deprecated.
+
 ## [1.4.9-pro] - 2026-06-21
 ### Fixed
 - Fixed: the project doesn't compile because ResetComponentsInEditor() is not wrapped with `#if UNITY_EDITOR`. https://github.com/KyryloKuzyk/PrimeTween/issues/250

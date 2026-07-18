@@ -199,7 +199,22 @@ async void AsyncMethod() {
 ```
 
 > While PrimeTween never allocates memory at runtime, the async/await feature in C# is allocating: awaiting an async method allocates a small amount of garbage. Likewise, StartCoroutine() also allocates GC.  
-> For performance-intensive code paths, use Sequence instead of async methods and Coroutines.
+> For performance-intensive code paths, use Sequence instead of async methods or Coroutines.
+
+#### SetCancellationToken(CancellationToken cancellationToken)
+Use **`.SetCancellationToken()`** to stop an animation when a `CancellationToken` is canceled. Cancellation stops the animation as if `Stop()` was called and happens on the next PrimeTween update; if the token is already canceled, the animation is stopped immediately. If the animation is awaited with 'await', the 'await' throws an `OperationCanceledException` when the token is canceled.
+
+To make a Sequence cancellable, call `SetCancellationToken()` on the Sequence itself instead of its children animations.
+```csharp
+var cancellationTokenSource = new CancellationTokenSource();
+Sequence.Create()
+    .Chain(Tween.PositionX(transform, endValue: 10f, duration: 1.5f))
+    .Chain(Tween.Scale(transform, endValue: 2f, duration: 0.5f))
+    .SetCancellationToken(cancellationTokenSource.Token);
+
+// ...
+cancellationTokenSource.Cancel(); // stops the animation
+```
 
 
 Controlling tweens
@@ -390,7 +405,7 @@ Or modify the `Packages/manifest.json` file manually:
 ```json
 {
   "dependencies": {
-    "com.kyrylokuzyk.primetween": "1.4.8",
+    "com.kyrylokuzyk.primetween": "1.4.11",
     ...
   },
   "scopedRegistries": [
